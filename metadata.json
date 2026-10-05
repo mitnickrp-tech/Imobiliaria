@@ -1,0 +1,6 @@
+{
+  "name": "Gestor de Aluguéis e Finanças",
+  "description": "Aplicativo para gerenciar o aluguel de imóveis e contas pessoais mensais, com modelagem MySQL e PHP para demonstração no GitHub.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
