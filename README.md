@@ -1,77 +1,91 @@
-# 🏠 Sistema de Gestão de Imóveis, Extratos da Imobiliária e Contas Pessoais
+# Property & Rental Management Dashboard
 
-> **Projeto de Demonstração para Portfólio GitHub**  
-> Desenvolvido com **PHP 8 + MySQL** no backend e interface moderna com **React, TypeScript & Tailwind CSS** (Dark Mode nativo).
+> Portfolio project demonstrating a full-stack workflow for rental-property administration, monthly statements and owner-side cash-flow tracking.
 
----
+A web application concept for organizing properties, tenants, rental agreements, agency statements and recurring expenses in one interface. The project combines a React/TypeScript frontend with a PHP API and a MySQL relational schema.
 
-## 📋 Visão Geral
+## Product scope
 
-Este projeto foi concebido para resolver um problema comum de gestão financeira familiar e patrimonial:  
-1. **Controle de Imóveis Alugados**: Cadastro de casas/apartamentos, inquilinos e contratos de locação com cálculo automático de taxa de administração e repasse líquido.
-2. **Espelhamento de Extratos da Imobiliária**: Registro dos comprovantes/faturas mensais enviados pela imobiliária, conferindo datas de vencimento, recebimento em conta e descontos de corretagem.
-3. **Controle de Despesas Pessoais**: Lançamento das contas fixas e variáveis do proprietário (saúde, energia, alimentação, água, etc.).
-4. **Balanço Mensal Inteligente**: Painel consolidado que cruza a renda líquida dos aluguéis com as contas pessoais, indicando o saldo restante no mês.
-5. **Autenticação Segura**: Suporte a login com níveis de acesso (Administrador / Gestor e Proprietário).
+- Property and rental-contract registration
+- Tenant and owner records
+- Monthly rental statements and net-transfer tracking
+- Management-fee and expense organization
+- Owner cash-flow overview
+- Role-oriented access flow for administrator/manager and property owner
+- SQL schema, sample queries and synthetic seed data
 
----
+## Architecture
 
-## 🗄️ Modelagem do Banco de Dados (MySQL 8)
+```text
+React + TypeScript UI
+        |
+        | HTTP / JSON
+        v
+PHP REST endpoints
+        |
+        | PDO / prepared statements
+        v
+      MySQL
+```
 
-O modelo relacional foi projetado seguindo as boas práticas da terceira forma normal (3NF), garantindo integridade referencial com chaves estrangeiras (`FOREIGN KEY`), índices e views analíticas.
+## Technology
 
-### Principais Tabelas:
-- **`usuarios`**: Autenticação, cargo (`admin`, `proprietario`), hash de senha (`bcrypt`) e controle de status.
-- **`proprietarios`**: Dados cadastrais da proprietária, dados bancários para repasse e chave PIX.
-- **`propriedades`**: Cadastro dos imóveis (endereço, número, bairro, cidade, CEP, tipo e status).
-- **`inquilinos`**: Dados dos locatários.
-- **`contratos`**: Código do contrato, duração, valor do aluguel, taxa de administração (%) e repasse líquido.
-- **`extratos_repasse`**: Histórico detalhado das faturas enviadas pela imobiliária (aluguel bruto, taxa de corretagem, repasse líquido e confirmação de pagamento).
-- **`despesas_pessoais`**: Despesas mensais categorizadas (Moradia, Alimentação, Saúde, Lazer/Tecnologia, Outros) com status de quitação.
-- **`vw_fluxo_caixa_mensal`**: View agregada de fluxo financeiro mês a mês.
+| Layer | Stack |
+|---|---|
+| Frontend | React, TypeScript, Vite |
+| Backend | PHP 8, PDO |
+| Database | MySQL 8 |
+| Data model | Relational schema, foreign keys, indexes and reporting queries |
 
-Os scripts completos estão disponíveis na pasta `/database`:
-- [`database/schema.sql`](database/schema.sql): DDL completo de criação das tabelas e índices.
-- [`database/seeds.sql`](database/seeds.sql): Dados fictícios para teste imediato.
-- [`database/queries.sql`](database/queries.sql): Consultas de relatórios, balanço e inadimplência.
+## Repository structure
 
----
+- `src/` — application interface and domain components
+- `backend_php/` — PHP endpoints and database connection
+- `database/schema.sql` — relational database structure
+- `database/seeds.sql` — fictional demonstration data
+- `database/queries.sql` — example reporting queries
 
-## ⚙️ Backend em PHP 8 (API RESTful)
+## Run locally
 
-Os endpoints em PHP estão organizados na pasta `/backend_php` utilizando `PDO` com prepared statements contra SQL Injection:
-- `config.php`: Conexão com PDO, tratamento de erros e headers CORS.
-- `auth.php`: Login de usuários e emissão de token.
-- `imoveis.php`: Listagem e cadastro de propriedades e contratos.
-- `extratos.php`: Consulta e baixa de faturas da imobiliária.
-- `despesas.php`: Gestão de contas pessoais mensais.
+### Requirements
 
----
+- Node.js 18+
+- PHP 8.1+
+- MySQL 8+
+- A local PHP server, XAMPP or Laragon
 
-## 🚀 Como Executar o Projeto
+### Database
 
-### Pré-requisitos:
-- PHP 8.1+ e MySQL 8.0+ (ou XAMPP / Laragon / Docker)
-- Node.js 18+ (para o frontend interativo)
+Create a local database and import the scripts:
 
-### 1. Configurando o Banco de Dados MySQL:
 ```bash
 mysql -u root -p < database/schema.sql
 mysql -u root -p < database/seeds.sql
 ```
 
-### 2. Rodando o Frontend React Demo:
+Configure database connection variables in the local PHP environment. Do not place production credentials in source files.
+
+### Frontend
+
 ```bash
 npm install
 npm run dev
 ```
-Acesse `http://localhost:3000` no seu navegador.
 
-### 🔑 Credenciais de Demonstração:
-- **Administrador**: `admin@imobiliaria.com` | Senha: `senha123`
-- **Proprietária**: `proprietaria@exemplo.com` | Senha: `senha123`
+Use the local URL printed by Vite. Confirm the API base URL and PHP server configuration for your environment before testing end-to-end flows.
 
----
+## Demo data and security
 
-## 🛡️ Dados Fictícios e Privacidade
-Todos os nomes, endereços, contas bancárias e valores presentes nas sementes de dados (`seeds`) são estritamente fictícios para fins de demonstração no GitHub.
+- Seed records are intended for local demonstration only.
+- Any demo login values present in seed scripts must never be reused in production.
+- Change or remove sample credentials before exposing a deployment publicly.
+- Configure CORS for the exact frontend origin in a real deployment; wildcard CORS is not a production default.
+- Never use real tenant, owner, bank-account or property data in a public demo.
+
+## Project status
+
+This repository is a portfolio demonstration. It is not presented as a certified property-management product or a production-ready deployment.
+
+## License
+
+No open-source license is currently provided. All rights are reserved unless permission is granted separately.
