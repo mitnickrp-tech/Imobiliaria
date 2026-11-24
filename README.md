@@ -74,6 +74,10 @@ npm run dev
 
 Use the local URL printed by Vite. Confirm the API base URL and PHP server configuration for your environment before testing end-to-end flows.
 
+## Implementation status and demo authentication
+
+The current React interface uses in-browser sample state persisted with `localStorage`. Its demo login is a client-side demonstration flow; it is not server-side authentication and must not be treated as a security boundary. The PHP endpoints and MySQL schema are included as backend implementation work, but a complete end-to-end integration between the React interface and PHP API is not claimed by this portfolio README.
+
 ## Demo data and security
 
 - Seed records are intended for local demonstration only.
